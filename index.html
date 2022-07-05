@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<body>
+<header>
+    <link  href="style.css" rel="stylesheet">  
+</header>
+<div id="demo">
+<form>
+    <div class="container">
+      <fieldset>
+        <legend>Consulta CEP</legend>
+    <input type="text" name="cep" id="cep" placeholder="Digite seu CEP">
+    <BR>
+    <br>
+    <input type="text" name="logradouro" id="logradouro" placeholder="Digite seu logradouro">
+    <BR>
+    <br>
+    <input type="text" name="complemento" id="complemento" placeholder="Digite seu complemento">
+    <br>
+    <br>
+    <input type="text" name="bairro" id="bairro" placeholder="Digite seu bairro">
+    <BR>
+    <br>    
+    <input type="text" name="localidade" id="localidade" placeholder="Digite sua localidade">
+    <br>
+    <br>
+    <input type="text" name="uf" id="uf" placeholder="Digite sua UF">
+    <br>
+    <br>
+<button type="button" onclick="loadDoc()">Enviar</button>
+</div>
+</fieldset>
+</div>
+</form>
+<script>
+function loadDoc() {
+    // cria objeto XMLHttpRequest
+    let cep = parseInt(document.getElementById("cep").value);
+  var xhttp = new XMLHttpRequest();
+
+  // prepara o tratamento da resposta
+  xhttp.onreadystatechange = function() {
+      // readState 4 = resposta recebida
+      // status 200 = resposta ok
+    if (this.readyState == 4 && this.status == 200) {
+    let endereco = JSON.parse(this.responseText)
+    document.getElementById("logradouro").value=endereco.logradouro;
+    document.getElementById("complemento").value=endereco.complemento;
+    document.getElementById("bairro").value=endereco.bairro;
+    document.getElementById("localidade").value=endereco.localidade;
+    document.getElementById("uf").value=endereco.uf;
+    }
+  };
+  // prepara a solicitação
+  xhttp.open("GET", "http://viacep.com.br/ws/"+cep+"/json/", true);
+
+  // envia a solicitação
+  xhttp.send();
+}
+</script>
+</div>
+<footer  class="fixar-rodape">Desenvolvido por Thiago Alexandre &copy; 2022</footer>
+</body>
+</html>
